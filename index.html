@@ -3,7 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .counter-widget {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .counter-value {
+      margin: 0 10px;
+      padding: 10px;
+      border: 2px solid #333;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .counter-btn {
+      cursor: pointer;
+      font-size: 20px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 5px;
+    }
+
+    .counter-btn:hover {
+      background-color: #45a049;
+    }
+
+    .projects-completed-container {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .projects-completed-text {
+      margin-bottom: 10px;
+    }
+
+    .reset-btn {
+      cursor: pointer;
+      font-size: 16px;
+      background-color: #e74c3c;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-top: 10px;
+    }
+
+    .reset-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Added Wiggle Animation */
+    @keyframes wiggle {
+      0% { transform: rotate(0); }
+      25% { transform: rotate(10deg); }
+      50% { transform: rotate(-10deg); }
+      75% { transform: rotate(5deg); }
+      100% { transform: rotate(0); }
+    }
+
+    /* Apply wiggle animation on click */
+    .counter-widget.clicked {
+      animation: wiggle 0.5s ease-in-out;
+    }
+  </style>
   <title>Project Counter</title>
 </head>
 <body>
@@ -20,7 +110,39 @@
     <button class="reset-btn" onclick="resetProjectCounter()">Reset</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Functions for the project counter
+    function increaseProjectCounter() {
+      var projectCounterElement = document.getElementById('project-counter-value');
+      var completedProjectsElement = document.getElementById('completed-projects');
+      var counterWidgetElement = document.getElementById('project-counter-widget');
+
+      var projectCounter = parseInt(projectCounterElement.innerHTML);
+      projectCounterElement.innerHTML = projectCounter + 1;
+
+      // Update "Projects Completed" count
+      var completedProjects = parseInt(completedProjectsElement.innerHTML);
+      completedProjectsElement.innerHTML = completedProjects + 1;
+
+      // Apply wiggle animation on click
+      counterWidgetElement.classList.add('clicked');
+      setTimeout(function() {
+        counterWidgetElement.classList.remove('clicked');
+      }, 500);
+    }
+
+    function decreaseProjectCounter() {
+      var projectCounterElement = document.getElementById('project-counter-value');
+      var projectCounter = parseInt(projectCounterElement.innerHTML);
+      projectCounterElement.innerHTML = Math.max(projectCounter - 1, 0);
+    }
+
+    function resetProjectCounter() {
+      var projectCounterElement = document.getElementById('project-counter-value');
+      projectCounterElement.innerHTML = '0';
+      // You can add any additional reset logic here if needed
+    }
+  </script>
 
 </body>
 </html>
